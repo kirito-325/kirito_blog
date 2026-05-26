@@ -97,7 +97,7 @@ cdn:
 avatar: "/assets/img/avatar.jpg"
 
 # Home page hero background image. Replace this with a wide cover image when available.
-hero_image: "/assets/img/preview.jpg"
+hero_image: "/assets/img/hero-bg.jpg"
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
