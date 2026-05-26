@@ -6,13 +6,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 2rem 1.25rem 5rem;
+  justify-content: flex-end;
+  padding: 2rem 1.25rem clamp(5rem, 12vh, 8rem);
   color: #fff;
   background-color: #111827;
-  background-image:
-    linear-gradient(180deg, rgba(8, 12, 22, 0.1), rgba(8, 12, 22, 0.4)),
-    var(--hero-bg);
+  background-image: var(--hero-bg);
   background-size: cover;
   background-position: center top;
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -25,51 +23,49 @@
 
 .hero-content {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  max-width: min(42rem, 100%);
-  gap: 1.35rem;
-  text-align: center;
+  gap: 1rem;
+  text-align: left;
 }
 
 .hero-avatar {
-  width: clamp(116px, 18vw, 168px);
-  height: clamp(116px, 18vw, 168px);
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   object-fit: cover;
-  background: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.42);
-  border: 4px solid rgba(255, 255, 255, 0.72);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.8);
 }
 
 .hero-text {
   display: grid;
-  gap: 0.55rem;
+  gap: 0.2rem;
 }
 
 .hero-kicker {
   margin: 0;
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 0.8rem;
-  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.7rem;
+  font-weight: 600;
   line-height: 1.2;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
 }
 
 .hero-name {
   color: inherit;
-  font-size: clamp(2.6rem, 9vw, 5.6rem);
-  font-weight: 800;
-  line-height: 0.95;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.1;
   margin: 0;
-  text-shadow: 0 12px 38px rgba(0, 0, 0, 0.48);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .hero-tagline {
-  color: rgba(255, 255, 255, 0.86);
-  font-size: clamp(1rem, 2vw, 1.25rem);
-  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.85rem;
+  line-height: 1.4;
   margin: 0;
 }
 
