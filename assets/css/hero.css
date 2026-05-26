@@ -2,61 +2,42 @@ html {
   scroll-behavior: smooth;
 }
 
-#main-wrapper {
-  overflow-x: hidden;
-}
-
+/* Hero is now outside the sidebar/main-wrapper, so it's naturally full-width */
 #hero {
   position: relative;
-  width: 100vw;
-  min-height: 100svh;
-  margin-left: calc(-50vw + 50%);
-  margin-top: -1.5rem;
-  margin-bottom: 0;
+  width: 100%;
+  height: 100svh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: clamp(5rem, 8vh, 7rem) 1.25rem clamp(6rem, 12vh, 8rem);
-  overflow: hidden;
+  padding: 2rem 1.25rem 5rem;
   color: #fff;
   background-color: #111827;
   background-image:
-    linear-gradient(180deg, rgba(8, 12, 22, 0.18), rgba(8, 12, 22, 0.68)),
+    linear-gradient(180deg, rgba(8, 12, 22, 0.3), rgba(8, 12, 22, 0.7)),
     var(--hero-bg);
   background-size: cover;
   background-position: center;
-  isolation: isolate;
-}
-
-#hero::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 0;
-  height: 24vh;
-  background: linear-gradient(180deg, rgba(8, 12, 22, 0), var(--main-bg, #fff));
-  pointer-events: none;
-  z-index: -1;
-}
-
-.hero-shade {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  background:
-    radial-gradient(circle at center, rgba(255, 255, 255, 0.2), transparent 32rem),
-    rgba(4, 8, 16, 0.32);
-  backdrop-filter: blur(1px);
 }
 
 .hero-content {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   max-width: min(42rem, 100%);
   gap: 1.35rem;
   text-align: center;
-  z-index: 2;
+}
+
+.hero-avatar {
+  width: clamp(116px, 18vw, 168px);
+  height: clamp(116px, 18vw, 168px);
+  border-radius: 50%;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.42);
+  border: 4px solid rgba(255, 255, 255, 0.72);
 }
 
 .hero-text {
@@ -74,16 +55,6 @@ html {
   letter-spacing: 0.18em;
 }
 
-.hero-avatar {
-  width: clamp(116px, 18vw, 168px);
-  height: clamp(116px, 18vw, 168px);
-  border-radius: 50%;
-  object-fit: cover;
-  background: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.42);
-  border: 4px solid rgba(255, 255, 255, 0.72);
-}
-
 .hero-name {
   color: inherit;
   font-size: clamp(2.6rem, 9vw, 5.6rem);
@@ -98,14 +69,12 @@ html {
   font-size: clamp(1rem, 2vw, 1.25rem);
   line-height: 1.7;
   margin: 0;
-  text-shadow: 0 8px 26px rgba(0, 0, 0, 0.42);
 }
 
 .hero-scroll-down {
   position: absolute;
   left: 50%;
-  bottom: clamp(1.5rem, 4vh, 2.25rem);
-  z-index: 3;
+  bottom: clamp(1.5rem, 4vh, 2.5rem);
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
@@ -116,13 +85,12 @@ html {
   color: rgba(255, 255, 255, 0.88);
   font-size: 0.85rem;
   font-weight: 700;
-  animation: bounce 2s infinite;
   text-decoration: none;
   background: rgba(8, 12, 22, 0.24);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
-  transform: translateX(-50%);
-  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
   backdrop-filter: blur(10px);
+  transform: translateX(-50%);
+  animation: bounce 2s infinite;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
 }
 
 .hero-scroll-down:hover {
@@ -135,31 +103,22 @@ html {
   font-size: 0.85rem;
 }
 
-.home-content {
-  position: relative;
-  padding-top: 2rem;
-  scroll-margin-top: 1.5rem;
+/* Hide sidebar and topbar while hero is in view */
+.has-hero #sidebar,
+.has-hero #topbar-wrapper {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
 }
 
-.home-section-heading {
-  margin: 0 0 1.25rem;
+.has-hero.hero-passed #sidebar,
+.has-hero.hero-passed #topbar-wrapper {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.home-section-heading span {
-  display: block;
-  color: var(--text-muted-color);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.home-section-heading h2 {
-  margin: 0.15rem 0 0;
-  color: var(--heading-color);
-  font-size: 1.45rem;
-  line-height: 1.25;
-  letter-spacing: 0;
+#blog-start {
+  scroll-margin-top: 0;
 }
 
 @keyframes bounce {
@@ -170,10 +129,8 @@ html {
 
 @media (max-width: 576px) {
   #hero {
-    min-height: 100dvh;
-    margin-top: -1rem;
-    padding-right: 1rem;
-    padding-left: 1rem;
+    height: 100dvh;
+    padding: 2rem 1rem 5rem;
   }
 
   .hero-scroll-down span {
@@ -188,11 +145,6 @@ html {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  .hero-scroll-down {
-    animation: none;
-  }
+  html { scroll-behavior: auto; }
+  .hero-scroll-down { animation: none; }
 }
