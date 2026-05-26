@@ -15,9 +15,9 @@ layout: compress
 <html lang="{{ page.lang | default: site.alt_lang | default: site.lang }}" {{ prefer_mode }}>
   {% include head.html lang=lang %}
 
-  <body{% if page.hero %} class="has-hero"{% endif %}>
+  <body{% if page.layout == 'home' %} class="has-hero"{% endif %}>
 
-    {% if page.hero %}
+    {% if page.layout == 'home' %}
     {% assign hero_image = site.hero_image | default: site.avatar %}
     <section id="hero" style="--hero-bg: url('{{ hero_image }}');">
       <div class="hero-content">
@@ -99,7 +99,7 @@ layout: compress
 
     {% include_cached search-loader.html lang=lang %}
 
-    {% if page.hero %}
+    {% if page.layout == 'home' %}
     <script>
     (function() {
       var hero = document.getElementById('hero');
