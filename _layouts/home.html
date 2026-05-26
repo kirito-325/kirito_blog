@@ -6,16 +6,29 @@ layout: default
 
 <link rel="stylesheet" href="{{ '/assets/css/hero.css' | relative_url }}">
 
-<section id="hero">
+{% assign hero_image = site.hero_image | default: site.avatar %}
+
+<section id="hero" style="--hero-bg: url('{{ hero_image | relative_url }}');">
+  <div class="hero-shade" aria-hidden="true"></div>
   <div class="hero-content">
-    <img src="{{ site.avatar }}" alt="avatar" class="hero-avatar">
-    <h1 class="hero-name">{{ site.social.name }}</h1>
-    <p class="hero-tagline">{{ site.tagline }}</p>
-    <a href="#post-list" class="hero-scroll-down" aria-label="Scroll down">
-      <i class="fas fa-chevron-down"></i>
-    </a>
+    <img src="{{ site.avatar | relative_url }}" alt="{{ site.social.name | default: site.title | escape }}" class="hero-avatar">
+    <div class="hero-text">
+      <p class="hero-kicker">{{ site.title }}</p>
+      <h1 class="hero-name">{{ site.social.name }}</h1>
+      <p class="hero-tagline">{{ site.tagline }}</p>
+    </div>
   </div>
+  <a href="#home-content" class="hero-scroll-down" aria-label="Scroll to posts">
+    <span>进入博客</span>
+    <i class="fas fa-chevron-down" aria-hidden="true"></i>
+  </a>
 </section>
+
+<div id="home-content" class="home-content">
+  <div class="home-section-heading">
+    <span>Blog</span>
+    <h2>最新文章</h2>
+  </div>
 
 {% assign all_pinned = site.posts | where: 'pin', 'true' %}
 {% assign all_normal = site.posts | where_exp: 'item', 'item.pin != true and item.hidden != true' %}
@@ -107,3 +120,4 @@ layout: default
 {% if paginator.total_pages > 1 %}
   {% include post-paginator.html %}
 {% endif %}
+</div>
