@@ -2,6 +2,22 @@ html {
   scroll-behavior: smooth;
 }
 
+/* When hero is present, make the whole page scroll as one unit */
+body.has-hero {
+  height: auto !important;
+  overflow-y: auto !important;
+}
+
+body.has-hero #main-wrapper {
+  height: auto !important;
+  min-height: auto !important;
+  overflow-y: visible !important;
+}
+
+body.has-hero #main-wrapper > .container {
+  min-height: auto !important;
+}
+
 /* Hero is now outside the sidebar/main-wrapper, so it's naturally full-width */
 #hero {
   position: relative;
