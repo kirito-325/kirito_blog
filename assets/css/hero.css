@@ -1,28 +1,8 @@
-html {
-  scroll-behavior: smooth;
-}
-
-/* When hero is present, make the whole page scroll as one unit */
-body.has-hero {
-  height: auto !important;
-  overflow-y: auto !important;
-}
-
-body.has-hero #main-wrapper {
-  height: auto !important;
-  min-height: auto !important;
-  overflow-y: visible !important;
-}
-
-body.has-hero #main-wrapper > .container {
-  min-height: auto !important;
-}
-
-/* Hero is now outside the sidebar/main-wrapper, so it's naturally full-width */
+/* Hero curtain overlay - covers everything, slides up/down */
 #hero {
-  position: relative;
-  width: 100%;
-  height: 100svh;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,6 +15,12 @@ body.has-hero #main-wrapper > .container {
     var(--hero-bg);
   background-size: cover;
   background-position: center;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+#hero.hero-hidden {
+  transform: translateY(-100%);
 }
 
 .hero-content {
@@ -101,7 +87,7 @@ body.has-hero #main-wrapper > .container {
   color: rgba(255, 255, 255, 0.88);
   font-size: 0.85rem;
   font-weight: 700;
-  text-decoration: none;
+  cursor: pointer;
   background: rgba(8, 12, 22, 0.24);
   backdrop-filter: blur(10px);
   transform: translateX(-50%);
@@ -119,24 +105,6 @@ body.has-hero #main-wrapper > .container {
   font-size: 0.85rem;
 }
 
-/* Hide sidebar and topbar while hero is in view */
-.has-hero #sidebar,
-.has-hero #topbar-wrapper {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
-}
-
-.has-hero.hero-passed #sidebar,
-.has-hero.hero-passed #topbar-wrapper {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-#blog-start {
-  scroll-margin-top: 0;
-}
-
 @keyframes bounce {
   0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
   40% { transform: translate(-50%, -8px); }
@@ -144,15 +112,7 @@ body.has-hero #main-wrapper > .container {
 }
 
 @media (max-width: 576px) {
-  #hero {
-    height: 100dvh;
-    padding: 2rem 1rem 5rem;
-  }
-
-  .hero-scroll-down span {
-    display: none;
-  }
-
+  .hero-scroll-down span { display: none; }
   .hero-scroll-down {
     width: 2.75rem;
     justify-content: center;
@@ -161,6 +121,6 @@ body.has-hero #main-wrapper > .container {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+  #hero { transition-duration: 0.01ms; }
   .hero-scroll-down { animation: none; }
 }

@@ -28,14 +28,12 @@ layout: compress
           <p class="hero-tagline">{{ site.tagline }}</p>
         </div>
       </div>
-      <a href="#blog-start" class="hero-scroll-down" aria-label="Scroll to posts">
+      <button class="hero-scroll-down" aria-label="Scroll to posts">
         <span>进入博客</span>
         <i class="fas fa-chevron-down" aria-hidden="true"></i>
-      </a>
+      </button>
     </section>
     {% endif %}
-
-    <div id="blog-start"></div>
 
     {% include sidebar.html lang=lang %}
 
@@ -104,10 +102,54 @@ layout: compress
     (function() {
       var hero = document.getElementById('hero');
       if (!hero) return;
-      var observer = new IntersectionObserver(function(entries) {
-        document.body.classList.toggle('hero-passed', !entries[0].isIntersecting);
-      }, { threshold: 0 });
-      observer.observe(hero);
+      var isVisible = true;
+      var transitioning = false;
+
+      function hideHero() {
+        if (!isVisible || transitioning) return;
+        transitioning = true;
+        hero.classList.add('hero-hidden');
+        isVisible = false;
+        setTimeout(function() { transitioning = false; }, 500);
+      }
+
+      function showHero() {
+        if (isVisible || transitioning) return;
+        transitioning = true;
+        hero.classList.remove('hero-hidden');
+        isVisible = true;
+        setTimeout(function() { transitioning = false; }, 500);
+      }
+
+      hero.querySelector('.hero-scroll-down').addEventListener('click', hideHero);
+
+      var scrollTarget = document.getElementById('main-wrapper') || window;
+      function getScrollTop() {
+        if (scrollTarget === window) return window.scrollY;
+        return scrollTarget.scrollTop;
+      }
+
+      window.addEventListener('wheel', function(e) {
+        if (e.deltaY > 0 && isVisible) {
+          hideHero();
+        } else if (e.deltaY < 0 && !isVisible && getScrollTop() === 0) {
+          showHero();
+        }
+      }, { passive: true });
+
+      var touchStartY = 0;
+      window.addEventListener('touchstart', function(e) {
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+
+      window.addEventListener('touchmove', function(e) {
+        var dy = touchStartY - e.touches[0].clientY;
+        if (dy > 30 && isVisible) {
+          hideHero();
+        } else if (dy < -30 && !isVisible && getScrollTop() === 0) {
+          showHero();
+        }
+      }, { passive: true });
     })();
     </script>
     {% endif %}
