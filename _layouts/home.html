@@ -8,10 +8,10 @@ layout: default
 
 {% assign hero_image = site.hero_image | default: site.avatar %}
 
-<section id="hero" style="--hero-bg: url('{{ hero_image | relative_url }}');">
+<section id="hero" style="--hero-bg: url('{{ hero_image }}');">
   <div class="hero-shade" aria-hidden="true"></div>
   <div class="hero-content">
-    <img src="{{ site.avatar | relative_url }}" alt="{{ site.social.name | default: site.title | escape }}" class="hero-avatar">
+    <img src="{{ site.avatar }}" alt="{{ site.social.name | default: site.title | escape }}" class="hero-avatar">
     <div class="hero-text">
       <p class="hero-kicker">{{ site.title }}</p>
       <h1 class="hero-name">{{ site.social.name }}</h1>
